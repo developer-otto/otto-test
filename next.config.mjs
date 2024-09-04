@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  webpack: (config) => {
-    config.resolve.fallback = {
-      crypto: false,
-    };
+  webpack: (config, {isServer}) => {
+    if(!isServer) {
+      config.resolve.fallback = {
+        crypto: false,
+      };
+    }
 
     return config;
   },

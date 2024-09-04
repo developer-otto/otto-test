@@ -1,3 +1,5 @@
+"use client"
+
 import "src/styles/globals.css";
 import type { AppProps } from "next/app";
 import FuelsProvider from "src/providers/fuels-provider";
