@@ -2,31 +2,25 @@
 
 
 import Link from 'next/link';
-import React, { ReactNode, useEffect } from 'react'
+import React, { ReactNode, useEffect } from 'react';
+import Script from "next/script";
+import VConsole from 'vconsole';
 
-export default function template({children}: {children: ReactNode}) {
-    
-    useEffect(() => {
-        if (window) {
-            let vConsole: any;
-            const loadVConsole = async () => {
-              const VConsole = (await import('vconsole')).default;
-              vConsole = new VConsole();
-            };
-            loadVConsole();
-            return () => {
-              if (vConsole) vConsole.destroy();
-            };
-        }
-    }, [])
-    
+export default function template({ children }: { children: ReactNode; }) {
+
   return (
     <div>
-        <div className='my-5'>
-          <Link href="/">Main</Link>
-        </div>
+      <div className='my-5'>
+        <Link href="/">Main</Link>
+      </div>
 
-        {children}
+      {children}
+      <Script
+        src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"
+        onLoad={() => {
+          new VConsole();
+        }}
+      ></Script>
     </div>
-  )
+  );
 }

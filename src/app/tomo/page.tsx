@@ -8,7 +8,7 @@ import { sepolia } from "viem/chains";
 
 
 export default function Tomo() {
-  const balance = useBalance({ chainId: sepolia.id })
+  const balance = useBalance({ chainId: sepolia.id });
   const tomo = useTomo();
   const { onLogin, onLogout } = useTomo();
   console.log("tomo", tomo);
@@ -58,7 +58,7 @@ export default function Tomo() {
           console.log("res", res)
         } catch (error) {
           console.log("error", error)
-          
+
         }
     },
     [evmAddress],
@@ -68,12 +68,12 @@ export default function Tomo() {
   return (
     <div className={styles.page}>
       <div>
-      <h2>Balance</h2>
-      <p>chain: {sepolia.name}</p>
-      <p>
-        balance: {balance.data?.formatted} {balance.data?.symbol}
-      </p>
-    </div>
+        <h2>Balance</h2>
+        <p>chain: {sepolia.name}</p>
+        <p>
+          balance: {balance.data?.formatted} {balance.data?.symbol}
+        </p>
+      </div>
       <div onClick={async (event) => {
         const res = await onLogin();
         console.log("res", res);
@@ -93,38 +93,38 @@ export default function Tomo() {
       >
         Open Telegram
       </button>
-      <button onClick={(event)=>{
-        handleSendEVMToken()
+      <button onClick={(event) => {
+        handleSendEVMToken();
       }}>
         <h2>Sned</h2>
       </button>
       <div>
-      <h2>History</h2>
-      {transactionsRender.map((item, index) => {
-        return (
-          <p style={{ marginBottom: 16 }} key={item.time}>
-            <p>
-              <span style={{ marginRight: 16 }}>{item.chainId}</span>
-              <span>{item.hash}</span>
+        <h2>History</h2>
+        {transactionsRender.map((item, index) => {
+          return (
+            <p style={{ marginBottom: 16 }} key={item.time}>
+              <p>
+                <span style={{ marginRight: 16 }}>{item.chainId}</span>
+                <span>{item.hash}</span>
+              </p>
+              <p>
+                <span style={{ marginRight: 16 }}>from:{item.fromAddress}</span>
+                <span>to:{item.toAddress}</span>
+              </p>
+              <p>
+                <span>
+                  amount:{' '}
+                  {formatUnits(
+                    BigInt(item.toAmount),
+                    item.toSwapTokens?.decimals || 18
+                  )}{' '}
+                  {` ${item.toSwapTokens?.symbol}`}
+                </span>
+              </p>
             </p>
-            <p>
-              <span style={{ marginRight: 16 }}>from:{item.fromAddress}</span>
-              <span>to:{item.toAddress}</span>
-            </p>
-            <p>
-              <span>
-                amount:{' '}
-                {formatUnits(
-                  BigInt(item.toAmount),
-                  item.toSwapTokens?.decimals || 18
-                )}{' '}
-                {` ${item.toSwapTokens?.symbol}`}
-              </span>
-            </p>
-          </p>
-        )
-      })}
-    </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
